@@ -13,10 +13,11 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\CodeVeronicaALRS\Shared.Events\Shared.csproj" />
   </ItemGroup>
 
 </Project>

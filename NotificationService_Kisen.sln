@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35931.197 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService_Kisen", "NotificationService_Kisen.csproj", "{409E61FD-501E-433E-9F4E-A58DA3013AA6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "..\CodeVeronicaALRS\Shared.Events\Shared.csproj", "{3DB1427C-E061-0DDC-4A65-AD54EF05C00E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{409E61FD-501E-433E-9F4E-A58DA3013AA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{409E61FD-501E-433E-9F4E-A58DA3013AA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{409E61FD-501E-433E-9F4E-A58DA3013AA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DB1427C-E061-0DDC-4A65-AD54EF05C00E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DB1427C-E061-0DDC-4A65-AD54EF05C00E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DB1427C-E061-0DDC-4A65-AD54EF05C00E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DB1427C-E061-0DDC-4A65-AD54EF05C00E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
