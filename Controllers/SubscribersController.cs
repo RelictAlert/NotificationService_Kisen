@@ -16,24 +16,32 @@ namespace NotificationService_Kisen.Controllers
         [HttpPost("mobile")]
         public async Task<IActionResult> SubscribeMobile([FromBody] MobileSubscribeDto dto)
         {
-            var sub = await _db.Subscribers.FindAsync(dto.DeviceId)
-                      ?? new Subscriber
-                      {
-                          SubscriberId = dto.DeviceId,
-                          SubscriberType = "MobileApp",
-                          ReceiveNewAlerts = true
-                      };
+            var sub = await _db.Subscribers.FindAsync(dto.DeviceId);
+            if (sub == null)
+            {
+                sub = new Subscriber
+                {
+                    SubscriberId = dto.DeviceId,
+                    SubscriberType = "MobileApp",
+                    ReceiveNewAlerts = true
+                };
+                _db.Subscribers.Add(sub);
+            }
+
             _db.SubscriberRegions.RemoveRange(
-           _db.SubscriberRegions.Where(sr => sr.SubscriberId == dto.DeviceId));
+                _db.SubscriberRegions.Where(sr => sr.SubscriberId == dto.DeviceId));
 
             foreach (var regionId in dto.RegionIds)
+            {
                 _db.SubscriberRegions.Add(new SubscriberRegion
                 {
                     SubscriberId = dto.DeviceId,
                     RegionId = regionId
                 });
+            }
 
             await _db.SaveChangesAsync();
+
             return Ok(new { message = "Subscribed (mobile)", dto.RegionIds });
         }
 
@@ -41,23 +49,30 @@ namespace NotificationService_Kisen.Controllers
         public async Task<IActionResult> SubscribeBot([FromBody] BotSubscribeDto dto)
         {
             var subId = "tg-" + dto.TelegramUserId;
-            var sub = await _db.Subscribers.FindAsync(subId)
-                      ?? new Subscriber
-                      {
-                          SubscriberId = subId,
-                          SubscriberType = "Telegram",
-                          ReceiveNewAlerts = true
-                      };
+
+            var sub = await _db.Subscribers.FindAsync(subId);
+            if (sub == null)
+            {
+                sub = new Subscriber
+                {
+                    SubscriberId = subId,
+                    SubscriberType = "Telegram",
+                    ReceiveNewAlerts = true
+                };
+                _db.Subscribers.Add(sub);
+            }
 
             _db.SubscriberRegions.RemoveRange(
                 _db.SubscriberRegions.Where(sr => sr.SubscriberId == subId));
 
             foreach (var regionId in dto.RegionIds)
+            {
                 _db.SubscriberRegions.Add(new SubscriberRegion
                 {
                     SubscriberId = subId,
                     RegionId = regionId
                 });
+            }
 
             await _db.SaveChangesAsync();
             return Ok(new { message = "Subscribed (bot)", dto.RegionIds });
