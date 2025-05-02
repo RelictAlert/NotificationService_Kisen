@@ -98,16 +98,24 @@ namespace NotificationService_Kisen.Controllers
             return Ok(regions);
         }
 
-        [HttpDelete("{subscriberId}/regions/{regionId}")]
-        public async Task<IActionResult> Unsubscribe(string subscriberId, int regionId)
+        [HttpDelete("{subscriberId}/regions")]
+        public async Task<IActionResult> UnsubscribeMany(string subscriberId, [FromBody] List<int> regionIds)
         {
-            var sr = await _db.SubscriberRegions
-                .FirstOrDefaultAsync(x => x.SubscriberId == subscriberId && x.RegionId == regionId);
-            if (sr != null)
+            if (regionIds == null || !regionIds.Any())
             {
-                _db.SubscriberRegions.Remove(sr);
+                return NoContent();
+            }
+
+            var subscriptionsToRemove = await _db.SubscriberRegions
+                .Where(x => x.SubscriberId == subscriberId && regionIds.Contains(x.RegionId))
+                .ToListAsync(); 
+
+            if (subscriptionsToRemove.Any())
+            {
+                _db.SubscriberRegions.RemoveRange(subscriptionsToRemove);
                 await _db.SaveChangesAsync();
             }
+
             return NoContent();
         }
     }
