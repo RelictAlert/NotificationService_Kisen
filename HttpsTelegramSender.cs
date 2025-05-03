@@ -14,11 +14,12 @@ namespace NotificationService_Kisen
             _https = https;
         }
 
-        public async Task SendAsync(string chatId, string text)
+        public async Task SendAsync(string chatId, int alertId, string text)
         {
             var payload = new
             {
                 ChatId = long.Parse(chatId),
+                AlertId = alertId,
                 Text = text
             };
 

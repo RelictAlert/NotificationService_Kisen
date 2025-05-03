@@ -35,7 +35,11 @@ namespace NotificationService_Kisen.Handlers
             foreach (var id in subs)
             {
                 if (id.StartsWith("tg-"))
-                    await _tg.SendAsync(id.Substring(3), evt.Summary);
+                    await _tg.SendAsync(
+                        chatId: id.Substring(3),
+                        alertId: evt.AlertId,
+                        text: evt.Summary
+                    );
                 else
                     await _push.SendAsync(id, evt.Summary);
             }
