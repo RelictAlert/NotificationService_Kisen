@@ -78,16 +78,6 @@ namespace NotificationService_Kisen.Controllers
             return Ok(new { message = "Subscribed (bot)", dto.RegionIds });
         }
 
-        [HttpPatch("{subscriberId}/toggle")]
-        public async Task<IActionResult> ToggleAlerts(string subscriberId)
-        {
-            var sub = await _db.Subscribers.FindAsync(subscriberId);
-            if (sub == null) return NotFound();
-            sub.ReceiveNewAlerts = !sub.ReceiveNewAlerts;
-            await _db.SaveChangesAsync();
-            return Ok(new { subscriberId, sub.ReceiveNewAlerts });
-        }
-
         [HttpGet("{subscriberId}/regions")]
         public async Task<IActionResult> GetRegions(string subscriberId)
         {
