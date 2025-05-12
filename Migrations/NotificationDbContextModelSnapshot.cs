@@ -41,152 +41,152 @@ namespace NotificationService_Kisen.Migrations
                         new
                         {
                             RegionId = 1,
-                            Name = "Kyiv"
+                            Name = "Київ"
                         },
                         new
                         {
                             RegionId = 2,
-                            Name = "Kharkiv"
+                            Name = "Харків"
                         },
                         new
                         {
                             RegionId = 3,
-                            Name = "Odesa"
+                            Name = "Одеса"
                         },
                         new
                         {
                             RegionId = 4,
-                            Name = "Dnipro"
+                            Name = "Дніпро"
                         },
                         new
                         {
                             RegionId = 5,
-                            Name = "Donetsk"
+                            Name = "Донецьк"
                         },
                         new
                         {
                             RegionId = 6,
-                            Name = "Lviv"
+                            Name = "Львів"
                         },
                         new
                         {
                             RegionId = 7,
-                            Name = "Zaporizhzhia"
+                            Name = "Запоріжжя"
                         },
                         new
                         {
                             RegionId = 8,
-                            Name = "Kryvyi Rih"
+                            Name = "Кривий Ріг"
                         },
                         new
                         {
                             RegionId = 9,
-                            Name = "Mykolaiv"
+                            Name = "Миколаїв"
                         },
                         new
                         {
                             RegionId = 10,
-                            Name = "Mariupol"
+                            Name = "Маріуполь"
                         },
                         new
                         {
                             RegionId = 11,
-                            Name = "Luhansk"
+                            Name = "Луганськ"
                         },
                         new
                         {
                             RegionId = 12,
-                            Name = "Vinnytsia"
+                            Name = "Вінниця"
                         },
                         new
                         {
                             RegionId = 13,
-                            Name = "Sevastopol"
+                            Name = "Севастополь"
                         },
                         new
                         {
                             RegionId = 14,
-                            Name = "Simferopol"
+                            Name = "Сімферополь"
                         },
                         new
                         {
                             RegionId = 15,
-                            Name = "Kherson"
+                            Name = "Херсон"
                         },
                         new
                         {
                             RegionId = 16,
-                            Name = "Poltava"
+                            Name = "Полтава"
                         },
                         new
                         {
                             RegionId = 17,
-                            Name = "Chernihiv"
+                            Name = "Чернігів"
                         },
                         new
                         {
                             RegionId = 18,
-                            Name = "Cherkasy"
+                            Name = "Черкаси"
                         },
                         new
                         {
                             RegionId = 19,
-                            Name = "Zhytomyr"
+                            Name = "Житомир"
                         },
                         new
                         {
                             RegionId = 20,
-                            Name = "Sumy"
+                            Name = "Суми"
                         },
                         new
                         {
                             RegionId = 21,
-                            Name = "Khmelnytskyi"
+                            Name = "Хмельницький"
                         },
                         new
                         {
                             RegionId = 22,
-                            Name = "Chernivtsi"
+                            Name = "Чернівці"
                         },
                         new
                         {
                             RegionId = 23,
-                            Name = "Rivne"
+                            Name = "Рівне"
                         },
                         new
                         {
                             RegionId = 24,
-                            Name = "Ivano-Frankivsk"
+                            Name = "Івано-Франківськ"
                         },
                         new
                         {
                             RegionId = 25,
-                            Name = "Kropyvnytskyi"
+                            Name = "Кропивницький"
                         },
                         new
                         {
                             RegionId = 26,
-                            Name = "Kamianske"
+                            Name = "Кам'янське"
                         },
                         new
                         {
                             RegionId = 27,
-                            Name = "Lutsk"
+                            Name = "Луцьк"
                         },
                         new
                         {
                             RegionId = 28,
-                            Name = "Kremenchuk"
+                            Name = "Кременчук"
                         },
                         new
                         {
                             RegionId = 29,
-                            Name = "Bila Tserkva"
+                            Name = "Біла Церква"
                         },
                         new
                         {
                             RegionId = 30,
-                            Name = "Melitopol"
+                            Name = "Мелітополь"
                         });
                 });
 

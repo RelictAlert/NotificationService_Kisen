@@ -1,3 +1,5 @@
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -24,6 +26,9 @@ builder.Services.AddCors(options =>
     });
 });
 
+var credentialFilePath = builder.Configuration["Firebase:ServiceAccountPath"];
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -43,10 +48,15 @@ builder.Services.AddHostedService<EventBusSubscriber>();
 builder.Services.AddScoped<AlertCreatedHandler>();
 builder.Services.AddHttpClient<ITelegramSender, HttpsTelegramSender>(client =>
 {
-   
     client.BaseAddress = new Uri(builder.Configuration["Bot:BaseUrl"]);
 });
-builder.Services.AddTransient<IPushSender, ConsolePushSender>();
+
+FirebaseApp.Create(new AppOptions()
+{
+    Credential = GoogleCredential.FromFile(credentialFilePath)
+});
+
+builder.Services.AddSingleton<IPushSender, FirebasePushSender>();
 
 var app = builder.Build();
 

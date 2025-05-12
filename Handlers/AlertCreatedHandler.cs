@@ -41,7 +41,12 @@ namespace NotificationService_Kisen.Handlers
                         text: evt.Summary
                     );
                 else
-                    await _push.SendAsync(id, evt.Summary);
+                    await _push.SendAsync(
+                        deviceToken: id,
+                        alertId: evt.AlertId,
+                        text: evt.Summary
+                    );
+                
             }
         }
     }
