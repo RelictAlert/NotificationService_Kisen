@@ -15,17 +15,27 @@ namespace NotificationService_Kisen.Services
             _sp = sp;
         }
 
-        public Task StartAsync(CancellationToken _)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
             _bus.Subscribe<AlertCreatedEvent>("alert.created", async evt =>
             {
+
                 using var scope = _sp.CreateScope();
                 var handler = scope.ServiceProvider.GetRequiredService<AlertCreatedHandler>();
                 await handler.HandleAsync(evt);
             });
+
+            _bus.Subscribe<AlertClosedEvent>("alert.closed", async evt =>
+            {
+                Console.WriteLine($"[DEBUG] Received AlertClosedEvent: Id={evt.AlertId}, Region={evt.RegionName}");
+                using var scope = _sp.CreateScope();
+                var handler = scope.ServiceProvider.GetRequiredService<AlertClosedHandler>();
+                await handler.HandleAsync(evt);
+            });
+
             return Task.CompletedTask;
         }
 
-        public Task StopAsync(CancellationToken _) => Task.CompletedTask;
+        public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
     }
 }

@@ -46,6 +46,7 @@ builder.Services.AddDbContext<NotificationDbContext>(opt =>
 builder.Services.AddSingleton<IEventBus, RabbitMqEventBus>();
 builder.Services.AddHostedService<EventBusSubscriber>();
 builder.Services.AddScoped<AlertCreatedHandler>();
+builder.Services.AddScoped<AlertClosedHandler>();
 builder.Services.AddHttpClient<ITelegramSender, HttpsTelegramSender>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["Bot:BaseUrl"]);

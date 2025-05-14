@@ -68,6 +68,15 @@ namespace NotificationService.Messaging
                 .GetAwaiter()
                 .GetResult();
 
+            _channel.QueueBindAsync(
+                queueName,
+                "alerts.exchange",
+                routingKey,
+                arguments: null)
+                .GetAwaiter()
+                .GetResult();
+
+
             var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.ReceivedAsync += async (sender, ea) =>
             {

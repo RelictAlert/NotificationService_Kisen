@@ -10,19 +10,21 @@ namespace NotificationService_Kisen
             var message = new Message
             {
                 Token = deviceToken,
-                Notification = new Notification {
-                    Title = "New Alert",
-                    Body = text 
+                Android = new AndroidConfig
+                {
+                    Priority = Priority.High
                 },
-
                 Data = new Dictionary<string, string>
                 {
-                    [ "alertId"] = alertId.ToString() ,
-                    [ "regionName"] = text.Substring(text.LastIndexOf("in ") + 3)
+                    ["title"] = "Kisen Alert",
+                    ["body"] = text,
+                    ["alertId"] = alertId.ToString(),
+                    ["regionName"] = text.Substring(text.LastIndexOf("in ") + 3)
                 }
             };
+
             await FirebaseMessaging.DefaultInstance.SendAsync(message);
         }
-
     }
+
 }
