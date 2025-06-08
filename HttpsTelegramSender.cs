@@ -13,7 +13,6 @@ namespace NotificationService_Kisen
         {
             _https = https;
         }
-
         public async Task SendAsync(string chatId, int alertId, string text)
         {
             var payload = new
@@ -24,7 +23,6 @@ namespace NotificationService_Kisen
             };
 
             var response = await _https.PostAsJsonAsync("/api/bot/send", payload);
-
             response.EnsureSuccessStatusCode();
         }
     }

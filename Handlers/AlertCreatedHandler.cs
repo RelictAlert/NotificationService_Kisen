@@ -2,6 +2,7 @@
 using NotificationService_Kisen.Data;
 using NotificationService_Kisen.Senders;
 using Shared.Events;
+using FirebaseAdmin.Messaging;
 
 namespace NotificationService_Kisen.Handlers
 {
@@ -24,7 +25,8 @@ namespace NotificationService_Kisen.Handlers
         {
             var region = await _db.Regions
                                  .FirstOrDefaultAsync(r => r.Name == evt.RegionName);
-            if (region == null) return;
+            if (region == null)
+                return;
 
             var subs = await _db.SubscriberRegions
                                 .Where(sr => sr.RegionId == region.RegionId
@@ -35,18 +37,40 @@ namespace NotificationService_Kisen.Handlers
             foreach (var id in subs)
             {
                 if (id.StartsWith("tg-"))
+                {
                     await _tg.SendAsync(
                         chatId: id.Substring(3),
                         alertId: evt.AlertId,
                         text: evt.Summary
                     );
+                }
                 else
-                    await _push.SendAsync(
-                        deviceToken: id,
-                        alertId: evt.AlertId,
-                        text: evt.Summary
-                    );
-                
+                {
+                    try
+                    {
+                        await _push.SendAsync(
+                            deviceToken: id,
+                            alertId: evt.AlertId,
+                            text: evt.Summary
+                        );
+                    }
+                    catch (FirebaseMessagingException ex)
+                    {
+                        if (ex.Message.Contains("Requested entity was not found"))
+                        {
+                            var subscriber = await _db.Subscribers.FindAsync(id);
+                            if (subscriber != null)
+                            {
+                                _db.Subscribers.Remove(subscriber);
+                                await _db.SaveChangesAsync();
+                            }
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
             }
         }
     }

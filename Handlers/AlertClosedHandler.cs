@@ -2,7 +2,7 @@
 using NotificationService_Kisen.Data;
 using NotificationService_Kisen.Senders;
 using Shared.Events;
-
+using FirebaseAdmin.Messaging;
 namespace NotificationService_Kisen.Handlers
 {
     public class AlertClosedHandler
@@ -22,7 +22,6 @@ namespace NotificationService_Kisen.Handlers
 
         public async Task HandleAsync(AlertClosedEvent evt)
         {
-            Console.WriteLine($"[DEBUG] Handling closure for AlertId={evt.AlertId}");
 
             var region = await _db.Regions
                                   .FirstOrDefaultAsync(r => r.Name == evt.RegionName);
@@ -46,14 +45,32 @@ namespace NotificationService_Kisen.Handlers
                 }
                 else
                 {
-                    await _push.SendAsync(
-                        deviceToken: id,
-                        alertId: evt.AlertId,
-                        text: evt.Summary
-                    );
+                    try
+                    {
+                        await _push.SendAsync(
+                            deviceToken: id,
+                            alertId: evt.AlertId,
+                            text: evt.Summary
+                        );
+                    }
+                    catch (FirebaseMessagingException ex)
+                    {
+                        if (ex.Message.Contains("Requested entity was not found"))
+                        {
+                            var subscriber = await _db.Subscribers.FindAsync(id);
+                            if (subscriber != null)
+                            {
+                                _db.Subscribers.Remove(subscriber);
+                                await _db.SaveChangesAsync();
+                            }
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
                 }
             }
         }
     }
-
 }

@@ -16,15 +16,22 @@ namespace NotificationService_Kisen
                 },
                 Data = new Dictionary<string, string>
                 {
-                    ["title"] = "Kisen Alert",
+                    ["title"] = "Relict Alert",
                     ["body"] = text,
                     ["alertId"] = alertId.ToString(),
                     ["regionName"] = text.Substring(text.LastIndexOf("in ") + 3)
                 }
             };
 
-            await FirebaseMessaging.DefaultInstance.SendAsync(message);
+            try
+            {
+                await FirebaseMessaging.DefaultInstance.SendAsync(message);
+            }
+            catch (FirebaseMessagingException ex)
+            {
+                Console.Error.WriteLine($"FirebaseMessagingException: {ex.Message}");
+                throw;
+            }
         }
     }
-
 }
